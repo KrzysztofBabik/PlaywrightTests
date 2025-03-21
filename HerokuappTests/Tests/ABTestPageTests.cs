@@ -32,7 +32,7 @@ namespace HerokuappTests.Tests
         public async Task ABTestPage_ShouldHaveCorrectHeading()
         {
             var header = await _abTestPage.GetHeaderAsync();
-            Assert.That(header, Does.Contain("A/B Test"), "Nagłówek strony jest niepoprawny");
+            Assert.That(header, Does.Contain("A/B Test"), "Header is incorrect");
         }
 
         [TearDown]
