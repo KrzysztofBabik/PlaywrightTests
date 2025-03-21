@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using HerokuappTests.Helpers;
 using HerokuappTests.Pages;
 using Microsoft.Playwright;
@@ -8,12 +9,12 @@ namespace HerokuappTests.Tests
 {
     [TestFixture]
     [Category("Herokuapp")]
-    public class ABTestPageTests
+    public class BasicAuthPageTests
     {
         private PlaywrightSetup _playwrightSetup;
         private IBrowserContext _context;
         private IPage _page;
-        private ABTestPage _abTestPage;
+        private BasicAuthPage _basicAuthPage;
 
         [SetUp]
         public async Task Setup()
@@ -23,16 +24,15 @@ namespace HerokuappTests.Tests
 
             _context = await _playwrightSetup.CreateNewContextAsync();
             _page = await _context.NewPageAsync();
-            _abTestPage = new ABTestPage(_page);
-
-            await _abTestPage.NavigateAsync();
+            _basicAuthPage = new BasicAuthPage(_page);
         }
 
         [Test]
-        public async Task ABTesting01_ShouldHaveCorrectHeading()
+        public async Task BasicAuth01_ValidCredentials()
         {
-            var header = await _abTestPage.GetHeaderAsync();
-            Assert.That(header, Does.Contain("A/B Test"), "Header is incorrect");
+            await _basicAuthPage.SendCorrectCredentials();
+            var pageText = await _basicAuthPage.GetPageTextAsync();
+            Assert.That(pageText, Does.Contain("Congratulations! You must have the proper credentials."), "No message about correct login.");
         }
 
         [TearDown]

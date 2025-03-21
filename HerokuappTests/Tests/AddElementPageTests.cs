@@ -29,7 +29,7 @@ namespace HerokuappTests.Tests
         }
 
         [Test]
-        public async Task AddElement_ShouldIncreaseDeleteButtonCount()
+        public async Task AddRemoveElement01_IncreaseDeleteButtonCount()
         {
             int beforeCount = await _addElementPage.GetDeleteButtonCountAsync();
             await _addElementPage.ClickAddElementAsync();
@@ -39,7 +39,7 @@ namespace HerokuappTests.Tests
         }
 
         [Test]
-        public async Task DeleteButton_ShouldRemoveElement()
+        public async Task AddRemoveElement02_RemoveElement()
         {
             await _addElementPage.ClickAddElementAsync();
             int beforeCount = await _addElementPage.GetDeleteButtonCountAsync();
