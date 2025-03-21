@@ -2,6 +2,7 @@
 using PlaywrightTests.Pages;
 using Microsoft.Playwright;
 using System.Threading.Tasks;
+using HerokuappTests.Helpers;
 
 namespace PlaywrightTests
 {
@@ -9,17 +10,18 @@ namespace PlaywrightTests
     [Category("Herokuapp")]
     public class BrokenImagesTests
     {
+        private PlaywrightSetup _playwrightSetup;
         private IPage _page;
-        private IBrowser _browser;
         private IBrowserContext _context;
         private BrokenImagesPage _brokenImagesPage;
 
         [SetUp]
         public async Task SetUp()
         {
-            var playwright = await Playwright.CreateAsync();
-            _browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions { Headless = true });
-            _context = await _browser.NewContextAsync();
+            _playwrightSetup = new PlaywrightSetup();
+            await _playwrightSetup.InitializeAsync();
+
+            _context = await _playwrightSetup.CreateNewContextAsync();
             _page = await _context.NewPageAsync();
             _brokenImagesPage = new BrokenImagesPage(_page);
         }
@@ -27,7 +29,7 @@ namespace PlaywrightTests
         [TearDown]
         public async Task TearDown()
         {
-            await _browser.CloseAsync();
+            await _playwrightSetup.DisposeAsync();
         }
 
         [Test]
