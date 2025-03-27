@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace HerokuappTests.Tests
 {
     [TestFixture]
+    [Category("Herokuapp")]
     public class DisappearingElementsTests
     {
         PlaywrightSetup _playwrightSetup;
